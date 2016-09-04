@@ -95,6 +95,6 @@ This tool was designed to help crack encrypted CTF passwords to obtain a flag. Y
 
 
 ##*Warning!!!*
-Millard West, its Affiliates and all of this projects Contributers in no way promote or encourage un-lawful hacking and this toolkit should be rightfully used for it's purpose for penetration testing on your own network or any network that you have explicit consent from the Administrator. Millard West, its Affiliates and any Contributers can and will not be held liable for any damage or unlawful action that may occur while using this toolkit. 
+Millard West, its Affiliates and all of this projects Contributers in no way promote or encourage un-lawful hacking and this toolkit should be rightfully used for it's purpose for penetration testing on your own network or any network that you have explicit consent from the Administrator. Millard West, its Affiliates and any Contributers cannot and will not be held liable for any damage or unlawful action that may occur while using this toolkit. 
 
 Happy Hacking!
