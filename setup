@@ -1,0 +1,20 @@
+#!/bin/bash
+# Script made by Aaron Vigal. http://www.aaronvigal.com
+
+mkdir /usr/share/aaronstoolkit
+# Download needed files from github
+git clone https://github.com/AaronVigal/aaronstoolkit.git /usr/share/aaronstoolkit
+# Install dependencies
+sudo apt-get -y install at>/dev/null 
+sudo apt-get -y install libnotify-bin>/dev/null 
+pip3 install beautifulsoup4
+pip3 install selenium
+# Make file executable
+sudo chmod +x /usr/share/aaronstoolkit/main 
+sudo chmod +x /usr/share/aaronstoolkit/loading10
+sudo chmod +x /usr/share/aaronstoolkit/loading15
+# Add alias
+echo "alias 'aaronstoolkit'=/usr/share/aaronstoolkit/./main" >> ~/.bashrc
+# Remove setup file
+rm setup
+notify-send "AaronsToolkit is done installing :)"
