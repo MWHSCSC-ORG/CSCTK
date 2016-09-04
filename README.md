@@ -2,11 +2,11 @@
 A Kali-Linux Toolkit made by the Millard West Computer Science Club that includes the following projects:
 
 1. [Metasploit](#Metasploit)
-2. [DNS Spoofing (Functional but in beta)](#DNS Spoofing)
+2. [DNS Spoofing](#DNS-Spoofing) (Functional but in beta)
 3. [Slowloris](#Slowloris)
-4. [Cracking WiFi networks](#Cracking WiFi)
-5. [Social Engineering Toolkit (Formerly known "DATA")](#Social Engineering Toolkit)
-6. [CSCipher (In-Development)](#CSCipher)
+4. [Cracking WiFi networks](#Cracking-WiFi)
+5. [Social Engineering Toolkit](#Social-Engineering-Toolkit) (Formerly known "DATA")
+6. [CSCipher](#CSCipher) (In-Development)
 
 This framework should run under most verions of Linux but is optimized for working on Kali.
 The setup is very straight-forward just copy and paste the following code into a terminal:
@@ -68,14 +68,20 @@ CSCTK
 
 ```
 
-#Metasploit
+####Metasploit
+text
 
-#DNS Spoofing
+####DNS-Spoofing
+text
 
-#Slowloris
+####Slowloris
+text
 
-#Cracking Wifi
+####Cracking-Wifi
+text
 
-#Social Engineering Toolkit
+####Social-Engineering-Toolkit
+text
 
-#CSCipher
+####CSCipher
+text
