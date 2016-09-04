@@ -15,7 +15,7 @@ sudo chmod +x /usr/share/csctk/main
 sudo chmod +x /usr/share/csctk/loading10
 sudo chmod +x /usr/share/csctk/loading15
 # Add alias
-echo "aliase/csctk=/usr/share/csctk/./main" >> ~/.bashrc
+echo "alias 'csctk'=/usr/share/csctk/./main" >> ~/.bashrc
 # Remove setup file
 rm setup
 notify-send "CSCTK is done installing :)"
