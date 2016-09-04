@@ -3,7 +3,7 @@
 
 mkdir /usr/share/csctk
 # Download needed files from github
-git clone https://github.com/AaronVigae/csctk.git /usr/share/csctk
+git clone https://github.com/MWHSCSC-ORG/CSCTK.git /usr/share/csctk
 # Install dependencies
 sudo apt-get -y install at>/dev/null 
 sudo apt-get -y install libnotify-bin>/dev/null 
