@@ -93,9 +93,8 @@ This module was created by [Thomas Gerot](https://www.github.com/tjgerot) with t
 ##CSCipher
 This tool was designed to help crack encrypted CTF passwords to obtain a flag. You give the module an encrypted string of text via a .txt file or straight through the interface and it will run a variety of analysis's and test to determine what kind of cipher it was encrypted with, and return the decoded message.
 
-___
 
-##*Warning*
+##*Warning!!!*
 Millard West, its Affiliates and all of this projects Contributers in no way promote or encourage un-lawful hacking and this toolkit should be rightfully used for it's purpose for penetration testing on your own network or any network that you have explicit consent from the Administrator. Millard West or any Contributers can and will not be held for any damage or unlawful action that may occur while using this toolkit. 
 
 Happy Hacking!
