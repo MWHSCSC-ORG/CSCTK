@@ -23,11 +23,12 @@ The setup file checks/installs the following dependencies:
 4. Python 2.7
 5. pip3
 6. ruby
-4. at
-5. libnotify-bin
-6. tput
-7. selenium 
-8. bs4
+7. perl
+8. at
+9. libnotify-bin
+10. tput
+11. selenium 
+12. bs4
 
 For a detailed description on how each module works check the sections below.
 
