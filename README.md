@@ -19,7 +19,10 @@ The setup file checks/installs the following dependencies:
 
 1. Metasploit Framework
 2. aircrack-ng
-3. Python 2.7
+3. Python 3.5
+4. Python 2.7
+4. at
+5. libnotify-bin
 4. More stuff I have yet to do
 
 For a detailed description on how each module works check the sections below.
