@@ -1,9 +1,7 @@
 # CSCTK (Computer Science Club Toolkit)
 A Kali-Linux Toolkit made by the Millard West Computer Science Club that includes the following projects:
+
 1. Metasploit
-  * Creating an Andoid apk
-  * Embedding that apk (In-Development)
-  * Exploiting the apk (In-Development)
 2. DNS Spoofing (Functional but in beta)
 3. Slowloris
 4. Cracking WiFi networks
