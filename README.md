@@ -4,7 +4,7 @@ A Kali-Linux Toolkit made by the Millard West Computer Science Club that include
 1. [Metasploit](#metasploit)
 2. [DNS Spoofing](#dns-spoofing) (Functional but in beta)
 3. [Slowloris](#slowloris)
-4. [Cracking WiFi networks](#rracking-wifi)
+4. [Cracking WiFi networks](#cracking-wifi)
 5. [Social Engineering Toolkit](#social-engineering-toolkit) (Formerly known "DATA")
 6. [CSCipher](#cscipher) (In-Development)
 
@@ -93,6 +93,7 @@ This tool was designed to help crack encryped CTF passwords to obtain a flag. Yo
 
 ___
 
+##*Warning*
 Millard West, its Affiliates and all of this projects Contributers in no way promote or encourage un-lawful hacking and this toolkit should be rightfully used for it's purpost for penetration testing on your own network or any etwork that you have explicit concent from the Administrator. Millard West or any Contributers can and will not be held for any damage or unlawful action that may occur while using this toolkit. 
 
 Happy Hacking!
