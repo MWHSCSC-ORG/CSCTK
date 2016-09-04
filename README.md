@@ -21,9 +21,13 @@ The setup file checks/installs the following dependencies:
 2. aircrack-ng
 3. Python 3.5
 4. Python 2.7
+5. pip3
+6. ruby
 4. at
 5. libnotify-bin
-4. More stuff I have yet to do
+6. tput
+7. selenium 
+8. bs4
 
 For a detailed description on how each module works check the sections below.
 
