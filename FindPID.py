@@ -1,7 +1,7 @@
 import subprocess, sys, os
-f = open('/usr/share/aaronstoolkit/PIDOutput.txt', 'r+')
+f = open('/usr/share/csctk/PIDOutput.txt', 'r+')
 lines=f.readlines()
-target = open('/usr/share/aaronstoolkit/pythonOutput.txt', 'w')
+target = open('/usr/share/csctk/pythonOutput.txt', 'w')
 def hasNumbers(inputString):
 	return any(char.isdigit() for char in inputString)
 for i in range(5,50):
@@ -10,7 +10,7 @@ for i in range(5,50):
 	if(hasNumbers(str(lines[i])) == True):
 		target.write(lines[i])	
 target.close()
-g = open('/usr/share/aaronstoolkit/pythonOutput.txt', 'r')
+g = open('/usr/share/csctk/pythonOutput.txt', 'r')
 lines=g.readlines()
 array = []
 count = 0
