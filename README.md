@@ -11,7 +11,7 @@ A Kali-Linux Toolkit made by the Millard West Computer Science Club that include
 This framework should run under most versions of Linux but is optimized for working on Kali.
 The setup is very straight-forward just copy and paste the following code into a terminal:
 ```{r, engine='bash', count_lines}
-wget https://github.com/MWHSCSC-ORG/CSCTK/blob/master/setup
+wget https://raw.githubusercontent.com/MWHSCSC-ORG/CSCTK/master/setup
 sudo chmod +x setup
 sudo ./setup 
 ```
