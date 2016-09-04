@@ -18,4 +18,4 @@ sudo chmod +x /usr/share/csctk/loading15
 echo "aliase/csctk=/usr/share/csctk/./main" >> ~/.bashrc
 # Remove setup file
 rm setup
-notify-sende/csctk is done installing :)"
+notify-send "CSCTK is done installing :)"
