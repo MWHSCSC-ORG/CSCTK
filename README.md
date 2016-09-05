@@ -95,8 +95,8 @@ This toolkit integrates the Slowloris program created by [Robert Hansen](ha.cker
 ##Cracking WiFi
 A tool created by [Aaron Vigal](https://www.github.com/AaronVigal) to brute force the password for any WiFi Network. This tool works by finding the MAC Address of the networks router and sending it deauthentication packets, and sniffing the network for the devices to reconnect. Once the program has intercepted the hand shake then it will start hashing passwords from a chosen wordlist and comparing it to the handshakes hash. This uses a combination of tools from the [aircrack-ng](https://www.aircrack-ng.org/) suite and would not be possible without it.
 
-##Social Engineering Toolkit
-This module was created by [Thomas Gerot](https://www.github.com/tjgerot) with the intention to scrape common social media outlets and gather information about a given user.
+## Zengineering Toolkit
+This module was created by [Thomas Gerot](https://www.github.com/tjgerot) with the intention to scrape common social media outlets and gather information about a given user. The toolkit relies heavily on webpage scraping for social media accounts and selenium driver implementation to handle the dynamic web application used in the Douglas County Assessor. As the toolkit discovers usernames and domains, it will repeat the process for each one.
 
 ##CSCipher
 This tool was designed to help crack encrypted CTF passwords to obtain a flag. You give the module an encrypted string of text via a .txt file or straight through the interface and it will run a variety of analysis's and test to determine what kind of cipher it was encrypted with, and return the decoded message.
