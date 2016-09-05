@@ -1,5 +1,5 @@
 class Zengineer:
-    def __init__(self, username, verbose = False, douglas_county = True, full_tld_search = False, open_links = False, webpage_output = True):
+    def __init__(self, username, verbose = False, douglas_county = True, full_tld_search = False, open_links = False):
         self.bios = []
         self.ages = []
         self.vines = []
@@ -17,7 +17,6 @@ class Zengineer:
         self.interests = []
         self.birthdays = []
         self.real_names = []
-        self.pdf_results = []
         self.public_keys = []
         self.verbose = verbose
         self.organizations = []
@@ -27,7 +26,6 @@ class Zengineer:
         self.usernames = [username]
         self.finished_usernames = []
         self.open_links = open_links
-        self.webpage_output = webpage_output
         self.douglas_county = douglas_county
         self.full_tld_search = full_tld_search
         self.out_file = open("output.log", "a")
@@ -549,6 +547,9 @@ class Zengineer:
             for bio in list(set(self.bios)):
                 q.write("<p>" + bio + "</p>")
         q.close()
+        import webbrowser
+        for account in self.account_links:
+            webbrowser.open(account)
     def find_common_domains(self, name):
         from Data import common_tlds, default_ips
         from socket import gethostbyname, gaierror
@@ -564,5 +565,13 @@ class Zengineer:
                     self.log("Domain " + name + extension + " is unregistered")
             except gaierror:
                 self.log("Domain " + name + extension + " is broken")
-zen = Zengineer("tjgerot")
+b = ArgumentParser(description = "Collects social engineering data on an username", epilog = "Written by Thomas Gerot, Millard West Computer Science Club", prefix_chars = "-")
+b.add_argument("-d", "--douglas", help = "Search the Douglas County Assesor", action = "store_true")
+b.add_argument("-f", "--full", help = "Checks against every TLD", action = "store_true")
+b.add_argument("-l", "--links", help = "Open links to discovered accounts", action = "store_true")
+b.add_argument("-v", "--verbose", help = "Increases how wordy the program's output will be", action = "store_true")
+c = b.add_argument_group("required arguments")
+c.add_argument("-u", "--username", help = "The username to look for", required = True)
+a = b.parse_args()
+zen = Zengineer(a.username, a.verbose, a.douglas, a.full, a.links)
 zen.scan()
