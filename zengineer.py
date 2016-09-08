@@ -565,7 +565,8 @@ class Zengineer:
                     self.log("Domain " + name + extension + " is unregistered")
             except gaierror:
                 self.log("Domain " + name + extension + " is broken")
-b = ArgumentParser(description = "Collects social engineering data on an username", epilog = "Written by Thomas Gerot, Millard West Computer Science Club", prefix_chars = "-")
+import argparse
+b = argparse.ArgumentParser(description = "Collects social engineering data on an username", epilog = "Written by Thomas Gerot, Millard West Computer Science Club", prefix_chars = "-")
 b.add_argument("-d", "--douglas", help = "Search the Douglas County Assesor", action = "store_true")
 b.add_argument("-f", "--full", help = "Checks against every TLD", action = "store_true")
 b.add_argument("-l", "--links", help = "Open links to discovered accounts", action = "store_true")
