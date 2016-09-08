@@ -4,6 +4,10 @@
 mkdir /usr/share/csctk
 # Download needed files from github
 git clone https://github.com/MWHSCSC-ORG/CSCTK.git /usr/share/csctk
+# Add alias
+echo "alias 'csctk'=/usr/share/csctk/./main" >> ~/.bashrc
+echo "deb-src http://http.kali.org/kali kali main non-free contrib" >> /etc/apt/sources.list
+echo "deb-src http://security.kali.org/kali-security kali/updates main contrib non-free" >> /etc/apt/sources.list
 # Install dependencies
 sudo apt-get -y install at>/dev/null 
 sudo apt-get -y install libnotify-bin>/dev/null 
@@ -15,8 +19,6 @@ pip3 install argparse
 sudo chmod +x /usr/share/csctk/main 
 sudo chmod +x /usr/share/csctk/loading10
 sudo chmod +x /usr/share/csctk/loading15
-# Add alias
-echo "alias 'csctk'=/usr/share/csctk/./main" >> ~/.bashrc
 # Remove setup file
 rm setup
 notify-send "CSCTK is done installing :)"
