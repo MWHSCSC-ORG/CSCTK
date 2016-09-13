@@ -453,6 +453,7 @@ class Zengineer:
                 from os import getcwd, rename, remove, system
                 from os.path import getsize
                 from time import sleep
+                import sys
                 if self.douglas_county is True:
                     for name in list(set(self.real_names)):
                         if name not in self.finished_names:
@@ -465,7 +466,7 @@ class Zengineer:
         self.display()
     def log(self, message):
         if self.verbose is True:
-            system("echo -ne ' Checking: " + currentDomain + "  \r'")
+            os.system("echo -ne ' Checking: " + currentDomain + "  \r'")
             self.out_file.write(message + "\n")
     def find_domains(self, name):
         from Data import all_tlds, default_ips
