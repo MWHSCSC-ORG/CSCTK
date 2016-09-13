@@ -465,9 +465,6 @@ class Zengineer:
         self.display()
     def log(self, message):
         if self.verbose is True:
-            import sys
-            import os
-            os.system("echo -ne ' Checking: " + currentDomain + "  \r'")
             self.out_file.write(message + "\n")
     def find_domains(self, name):
         from Data import all_tlds, default_ips
