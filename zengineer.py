@@ -550,7 +550,7 @@ class Zengineer:
         for account in self.account_links:
             webbrowser.open(account)
     def find_common_domains(self, name):
-        from Data import common_tlds, default_ips
+        #from Data import common_tlds, default_ips
         from socket import gethostbyname, gaierror
         for extension in common_tlds:
             self.log("Checking " + extension + " comains")
