@@ -552,18 +552,18 @@ class Zengineer:
     def find_common_domains(self, name):
         #from Data import common_tlds, default_ips
         from socket import gethostbyname, gaierror
-        for extension in common_tlds:
-            self.log("Checking " + extension + " comains")
-            ip = None
-            try:
-                ip = gethostbyname(name + extension)
-                if ip not in default_ips:
-                    self.log("Adding domain: " + "http://www." + name + extension)
-                    self.domains.append("http://www." + name + extension)
-                else:
-                    self.log("Domain " + name + extension + " is unregistered")
-            except gaierror:
-                self.log("Domain " + name + extension + " is broken")
+        # for extension in common_tlds:
+        #     self.log("Checking " + extension + " comains")
+        #     ip = None
+        #     try:
+        #         ip = gethostbyname(name + extension)
+        #         if ip not in default_ips:
+        #             self.log("Adding domain: " + "http://www." + name + extension)
+        #             self.domains.append("http://www." + name + extension)
+        #         else:
+        #             self.log("Domain " + name + extension + " is unregistered")
+        #     except gaierror:
+        #         self.log("Domain " + name + extension + " is broken")
 import argparse
 b = argparse.ArgumentParser(description = "Collects social engineering data on an username", epilog = "Written by Thomas Gerot, Millard West Computer Science Club", prefix_chars = "-")
 b.add_argument("-d", "--douglas", help = "Search the Douglas County Assesor", action = "store_true")
